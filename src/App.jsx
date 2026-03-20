@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const COUPONS = [
-  { id: 'movie',   icon: '🎬', name: 'movie night',      desc: "your choice. i'll watch without a word." },
-  { id: 'vent',    icon: '🫂', name: 'vent pass',        desc: 'i listen. no fixing, no advice. just here.' },
-  { id: 'kiss',    icon: '💋', name: 'kiss on demand',   desc: 'no context needed.' },
-  { id: 'cook',    icon: '👨‍🍳', name: 'i cook',          desc: 'one meal, cooked by me. your request.' },
-  { id: 'game',    icon: '🎮', name: 'game night',       desc: 'your pick of the game. i play properly.' },
-  { id: 'massage', icon: '💆', name: 'head massage',     desc: 'on demand. no negotiation.' },
-  { id: 'drive',   icon: '🌙', name: 'late night drive', desc: 'just us, no destination.' },
+  { id: 'movie', icon: '🎬', name: 'movie night', desc: "your choice. i'll watch without a word." },
+  { id: 'vent', icon: '🫂', name: 'vent pass', desc: 'i listen. no fixing, no advice. just here.' },
+  { id: 'kiss', icon: '💋', name: 'kiss on demand', desc: 'no context needed.' },
+  { id: 'cook', icon: '👨‍🍳', name: 'i cook', desc: 'one meal, cooked by me. your request.' },
+  { id: 'game', icon: '🎮', name: 'game night', desc: 'your pick of the game. i play properly.' },
+  { id: 'massage', icon: '💆', name: 'head massage', desc: 'on demand. no negotiation.' },
+  { id: 'drive', icon: '🌙', name: 'late night drive', desc: 'just us, no destination.' },
 ];
 
 // ─── STORAGE ─────────────────────────────────────────────────────────────────
@@ -584,16 +584,16 @@ html, body, #root {
 
 // ─── LOGIN ────────────────────────────────────────────────────────────────────
 function LoginView({ onLogin }) {
-  const [name, setName]     = useState('');
-  const [pass, setPass]     = useState('');
-  const [shake, setShake]   = useState(false);
-  const [error, setError]   = useState(false);
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
+  const [shake, setShake] = useState(false);
+  const [error, setError] = useState(false);
 
   const submit = (e) => {
     e.preventDefault();
     const n = name.trim().toLowerCase();
-    if (n === 'hardee' && pass === 'whale')   return onLogin('hardee');
-    if (n === 'mit'    && pass === 'captain') return onLogin('mit');
+    if (n === 'hardee' && pass === 'whale') return onLogin('hardee');
+    if (n === 'mit' && pass === 'captain') return onLogin('mit');
     setShake(true);
     setError(true);
     setTimeout(() => setShake(false), 420);
@@ -602,7 +602,7 @@ function LoginView({ onLogin }) {
   return (
     <div className="auth-wrap">
       <div className={`auth-card${shake ? ' shake' : ''}`}>
-        <div className="auth-title">Happy Birthday Bachaa <span className="emoji">🐋</span></div>
+        <div className="auth-title">Please login broski<span className="emoji">🐋</span></div>
         <div className="auth-sub">enter your name and password</div>
         <form onSubmit={submit} noValidate>
           <input
@@ -632,8 +632,8 @@ function LoginView({ onLogin }) {
 // ─── HARDEE VIEW ──────────────────────────────────────────────────────────────
 function HardeeView({ onLogout, showToast }) {
   const [redemptions, setRedemptions] = useState(() => readStorage());
-  const [modal, setModal]             = useState(null); // coupon object
-  const [pulsingId, setPulsingId]     = useState(null);
+  const [modal, setModal] = useState(null); // coupon object
+  const [pulsingId, setPulsingId] = useState(null);
 
   useEffect(() => {
     const refresh = () => setRedemptions(readStorage());
@@ -714,13 +714,13 @@ function HardeeView({ onLogout, showToast }) {
 function formatTimestamp(iso) {
   const d = new Date(iso);
   const month = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-  const time  = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   return `${month} · ${time}`;
 }
 
 function MitView({ onLogout }) {
   const [redemptions, setRedemptions] = useState(() => readStorage());
-  const [secsAgo, setSecsAgo]         = useState(0);
+  const [secsAgo, setSecsAgo] = useState(0);
   const syncRef = useRef(Date.now());
 
   useEffect(() => {
@@ -731,7 +731,7 @@ function MitView({ onLogout }) {
     };
 
     load();
-    const poll   = setInterval(load, 10000);
+    const poll = setInterval(load, 10000);
     const ticker = setInterval(() => setSecsAgo(Math.floor((Date.now() - syncRef.current) / 1000)), 1000);
 
     const onStorageUpdate = () => load();
@@ -808,9 +808,9 @@ function MitView({ onLogout }) {
 
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [user, setUser]   = useState(null);
+  const [user, setUser] = useState(null);
   const [toast, setToast] = useState('');
-  const toastRef          = useRef(null);
+  const toastRef = useRef(null);
 
   const showToast = useCallback((msg) => {
     setToast(msg);
@@ -821,9 +821,9 @@ export default function App() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      {user === null    && <LoginView onLogin={setUser} />}
+      {user === null && <LoginView onLogin={setUser} />}
       {user === 'hardee' && <HardeeView onLogout={() => setUser(null)} showToast={showToast} />}
-      {user === 'mit'    && <MitView   onLogout={() => setUser(null)} />}
+      {user === 'mit' && <MitView onLogout={() => setUser(null)} />}
       {toast && <div className="toast">{toast}</div>}
     </>
   );
