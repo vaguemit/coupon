@@ -602,7 +602,7 @@ function LoginView({ onLogin }) {
   return (
     <div className="auth-wrap">
       <div className={`auth-card${shake ? ' shake' : ''}`}>
-        <div className="auth-title">for hardee. <span className="emoji">🐋</span></div>
+        <div className="auth-title">Happy Birthday Bachaa <span className="emoji">🐋</span></div>
         <div className="auth-sub">enter your name and password</div>
         <form onSubmit={submit} noValidate>
           <input
